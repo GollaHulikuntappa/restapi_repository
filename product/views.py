@@ -9,6 +9,7 @@ from rest_framework.views import APIView
 from product.test import Message
 from rest_framework import status
 from rest_framework import mixins,generics
+from rest_framework import viewsets
 
 # Create your views here.
 @api_view(['GET','POST'])
@@ -106,3 +107,12 @@ class DetailedProductsGeneric(generics.RetrieveAPIView,
     serializer_class=ProductSerializer
     
     
+    
+class ProductViewSet(viewsets.ModelViewSet):
+    queryset= Product.objects.all()
+    serializer_class=ProductSerializer
+    
+    
+class ProductViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset= Product.objects.all()
+    serializer_class=ProductSerializer
