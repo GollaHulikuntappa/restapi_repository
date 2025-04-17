@@ -10,9 +10,11 @@ from product.test import Message
 from rest_framework import status
 from rest_framework import mixins,generics
 from rest_framework import viewsets
-
+from rest_framework.authentication import BaseAuthentication, SessionAuthentication, TokenAuthentication
+from rest_framework.decorators import authentication_classes
 # Create your views here.
 @api_view(['GET','POST'])
+@authentication_classes([BaseAuthentication, SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def listproducts(request):
     query=Product.objects.all()
@@ -31,7 +33,8 @@ def listmessages(request):
 
 
 class ListProductc(APIView):
-    
+    authentication_classes=[BaseAuthentication,SessionAuthentication,TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     def get(self,request):
         query=Product.objects.all()
         serializer_class=ProductSerializer(query,many=True)
